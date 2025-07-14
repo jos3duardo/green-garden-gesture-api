@@ -6,6 +6,7 @@ loadEnv();
 export const MINIO_BUCKET = env.MINIO_BUCKET;
 export const MINIO_URL = env.MINIO_URL;
 export const MINIO_LINK = `${MINIO_URL}/${MINIO_BUCKET}`;
+export const PATH_PLANTS = `plants`;
 
 export const minioConfig = {
   endPoint: env.MINIO_ENDPOINT,
