@@ -1,11 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
 import { once } from 'events';
-import { FileUpload } from 'graphql-upload-minimal';
 import { File } from '@modules/file/entities/file.entity';
+import { FileUpload } from 'graphql-upload-minimal';
+import { FileUploadBuffer } from '@modules/file/interfaces/file-uplopad.interface';
 
 export class ExtractInfoFileUploadService {
-  async execute(fileUpload: FileUpload): Promise<Partial<File>> {
-    const { mimetype } = fileUpload;
+  async execute(fileUpload: FileUploadBuffer): Promise<Partial<File>> {
+    const { mimetype, buffer } = fileUpload;
     const partesNome = fileUpload.filename.split('.');
     const extension = partesNome.pop();
 
@@ -14,7 +15,14 @@ export class ExtractInfoFileUploadService {
     }
 
     const name = partesNome.join('.');
-    const size = await this.getFileSize(fileUpload);
+    const stream = {
+      ...fileUpload,
+      createReadStream: () => {
+        const { Readable } = require('stream');
+        return Readable.from(buffer);
+      },
+    };
+    const size = await this.getFileSize(stream);
 
     return { name, extension, mimetype, size };
   }
