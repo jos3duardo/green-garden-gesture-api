@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePlantDto } from './dto/create-plant.dto';
-import { UpdatePlantDto } from './dto/update-plant.dto';
+import { CreatePlantInput } from '@modules/plant/input/create-plant.input';
+import { UpdatePlantInput } from '@modules/plant/input/update-plant.input';
 
 @Injectable()
 export class PlantService {
-  create(createPlantDto: CreatePlantDto) {
+  create(createPlantInput: CreatePlantInput) {
     return 'This action adds a new plant';
   }
 
@@ -16,7 +16,7 @@ export class PlantService {
     return `This action returns a #${id} plant`;
   }
 
-  update(id: number, updatePlantDto: UpdatePlantDto) {
+  update(id: number, updatePlantInput: UpdatePlantInput) {
     return `This action updates a #${id} plant`;
   }
 
