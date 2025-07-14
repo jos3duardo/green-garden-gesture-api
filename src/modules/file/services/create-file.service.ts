@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload-minimal';
 import { Repository } from 'typeorm';
@@ -16,12 +16,38 @@ export class CreateFileService {
   ) {}
 
   async execute(fileUpload: FileUpload, directory: string): Promise<File> {
-    const infoFile = await this.infoFileService.execute(fileUpload);
+    try {
+      const chunks: Buffer[] = [];
+      for await (const chunk of fileUpload.createReadStream()) {
+        chunks.push(chunk);
+      }
+      const fileBuffer = Buffer.concat(chunks);
 
-    const { url, pathBucket } = await this.uploadFileService.execute(
-      directory,
-      fileUpload,
-    );
-    return this.repository.save({ ...infoFile, url, pathBucket });
+      const fileUploadBuffer: {
+        buffer: Buffer;
+        filename: string;
+        fieldName: string;
+        mimetype: string;
+        encoding: string;
+      } = {
+        buffer: fileBuffer,
+        filename: fileUpload.filename,
+        fieldName: fileUpload.fieldName,
+        mimetype: fileUpload.mimetype,
+        encoding: fileUpload.encoding,
+      };
+
+      const { url, pathBucket } = await this.uploadFileService.execute(
+        directory,
+        fileUploadBuffer,
+      );
+
+      const infoFile = await this.infoFileService.execute(fileUploadBuffer);
+
+      return await this.repository.save({ ...infoFile, url, pathBucket });
+    } catch (error) {
+      Logger.error(error);
+      throw new Error(`Error creating file: ${error.message}`);
+    }
   }
 }
