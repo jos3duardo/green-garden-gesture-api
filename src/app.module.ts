@@ -9,6 +9,7 @@ import { dataSourceOptions, gqlConfig } from '@config/index';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriverConfig } from '@nestjs/apollo';
 import { FileModule } from './modules/file/file.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FileModule } from './modules/file/file.module';
     PlantModule,
     UserModule,
     FileModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],
