@@ -8,6 +8,7 @@ import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Plant } from '@modules/plant/entities/plant.entity';
 import { PlantType } from '@modules/plant/entities/plant.type';
 import { FileModule } from '@modules/file/file.module';
+import { PlantResolver } from '@modules/plant/resolvers/plant.resolver';
 
 @Module({
   imports: [
@@ -26,6 +27,6 @@ import { FileModule } from '@modules/file/file.module';
     }),
     FileModule,
   ],
-  providers: [PlantService],
+  providers: [PlantResolver, PlantService],
 })
 export class PlantModule {}
