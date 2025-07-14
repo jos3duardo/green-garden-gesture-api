@@ -10,7 +10,7 @@ export class PlantType extends BaseDto {
   type: string;
 
   @Field()
-  plantedDate: string;
+  plantedDate: Date;
 
   @Field()
   location: string;

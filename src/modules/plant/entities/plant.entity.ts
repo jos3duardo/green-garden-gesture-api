@@ -10,7 +10,7 @@ export class Plant extends BaseEntity {
   type: string;
 
   @Column()
-  plantedDate: string;
+  plantedDate: Date;
 
   @Column()
   location: string;
@@ -28,5 +28,5 @@ export class Plant extends BaseEntity {
   status: string;
 
   @Column({ name: 'file_id' })
-  fileId: string;
+  fileId: number;
 }
