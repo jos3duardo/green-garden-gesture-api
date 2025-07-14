@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PlantService } from './plant.service';
+import { PlantService } from './services/plant.service';
 import {
   NestjsQueryGraphQLModule,
   PagingStrategies,
@@ -7,6 +7,7 @@ import {
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { Plant } from '@modules/plant/entities/plant.entity';
 import { PlantType } from '@modules/plant/entities/plant.type';
+import { FileModule } from '@modules/file/file.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { PlantType } from '@modules/plant/entities/plant.type';
         },
       ],
     }),
+    FileModule,
   ],
   providers: [PlantService],
 })
