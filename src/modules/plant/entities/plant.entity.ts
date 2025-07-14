@@ -31,6 +31,21 @@ export class Plant extends BaseEntity {
   @Column({ name: 'file_id' })
   fileId: number;
 
+  @Column({ nullable: true, default: '' })
+  temperature: string;
+
+  @Column({ nullable: true, default: '' })
+  humidity: string;
+
+  @Column({ nullable: true, default: '' })
+  sunlight: string;
+
+  @Column({ nullable: true, type: 'text' })
+  description: string;
+
+  @Column({ type: 'date', nullable: true, name: 'next_watering' })
+  nextWatering: Date;
+
   @OneToOne(() => File, { nullable: true })
   @JoinColumn({
     name: 'file_id',
