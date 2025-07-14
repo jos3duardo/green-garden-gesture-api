@@ -2,8 +2,8 @@ import { MINIO_BUCKET, MINIO_LINK } from '@config/minio.config';
 
 import { Injectable } from '@nestjs/common';
 import { randomBytes } from 'crypto';
-import { FileUpload } from 'graphql-upload-minimal';
 import { MinioService } from 'nestjs-minio-client';
+import { FileUploadBuffer } from '@modules/file/interfaces/file-uplopad.interface';
 
 interface UploadArquivoInterface {
   url: string;
@@ -16,7 +16,7 @@ export class UploadFileService {
 
   async execute(
     diretorio: string,
-    fileUpload: FileUpload,
+    fileUpload: FileUploadBuffer,
   ): Promise<UploadArquivoInterface> {
     let metaData: { [key: string]: string } = {
       'Content-Type': 'image/jpeg',
@@ -35,7 +35,7 @@ export class UploadFileService {
     const nomeArquivo = randomBytes(20).toString('hex');
     const nomeCompleto = diretorio + '/' + nomeArquivo + '.' + extensions;
 
-    const fileStream = fileUpload.createReadStream();
+    const fileStream = fileUpload.buffer;
 
     this.minioService.client.putObject(
       MINIO_BUCKET,
