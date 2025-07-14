@@ -35,5 +35,6 @@ import { FileType } from '@modules/file/entities/file.type';
     RemoveFileService,
     UploadFileService,
   ],
+  exports: [CreateFileService],
 })
 export class FileModule {}
