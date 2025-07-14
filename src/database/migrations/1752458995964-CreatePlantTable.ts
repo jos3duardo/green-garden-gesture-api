@@ -53,6 +53,26 @@ export class CreatePlantTable1752458995964 implements MigrationInterface {
         type: 'int',
       },
       {
+        name: 'temperature',
+        type: 'varchar',
+      },
+      {
+        name: 'humidity',
+        type: 'varchar',
+      },
+      {
+        name: 'sunlight',
+        type: 'varchar',
+      },
+      {
+        name: 'description',
+        type: 'text',
+      },
+      {
+        name: 'nextWatering',
+        type: 'varchar',
+      },
+      {
         name: 'created_at',
         type: 'timestamp with time zone',
         default: 'now()',
